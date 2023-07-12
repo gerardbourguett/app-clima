@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <h1>App Clima</h1>
+      <div class="grid">
+        <form method="GET">
+          <label for="">Indique ciudad</label>
+          <input
+            type="text"
+            name="ciudad"
+            id=""
+            placeholder="Rancagua, 48.8567,2.3508, 2820000, iata:SCL, 100.0.0.1"
+          />
+          <small
+            >Query parameter based on which data is sent back. It could be
+            following: Latitude and Longitude (Decimal degree) e.g:
+            q=48.8567,2.3508 city name e.g.: q=Paris US zip e.g.: q=10001 UK
+            postcode e.g: q=SW1 Canada postal code e.g: q=G2J metar: e.g:
+            q=metar:EGLL iata:<3 digit airport code> e.g: q=iata:DXB auto:ip IP
+            lookup e.g: q=auto:ip IP address (IPv4 and IPv6 supported) e.g:
+            q=100.0.0.1</small
+          >
+          <button type="submit" class="contrast outlin">Aceptar</button>
+        </form>
+      </div>
+      <hr />
+      {% if clima %}
+      <h2>
+        Información del Clima para {{ clima.location.name}},
+        {{clima.location.region}}, {{clima.location.country}}
+      </h2>
+      <p>Actualizado a las {{clima.current.last_updated}} hora local</p>
+      <table role="grid">
+        <thead>
+          <tr>
+            <th>Clave</th>
+            <th>Valor</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% comment %} {% for key, value in clima.current.items %}
+          <tr>
+            <td>{{ key }}</td>
+            <td>{{ value }}</td>
+          </tr>
+          {% endfor %} {% endcomment %}
+          <tr>
+            <td>Imagen:</td>
+            <td>
+              <img
+                src="{{ clima.current.condition.icon }}"
+                alt="Icono del clima"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td>Condición:</td>
+            <td>{{clima.current.condition.text}}</td>
+          </tr>
+          <tr>
+            <td>Temperatura en Celsius:</td>
+            <td>{{clima.current.temp_c}}°C</td>
+          </tr>
+          <tr>
+            <td>Sensación Térmica:</td>
+            <td>{{clima.current.feelslike_c}}°C</td>
+          </tr>
+          <tr>
+            <td>UV:</td>
+            <td>{{clima.current.uv}}</td>
+          </tr>
+          <tr>
+            <td>Viento:</td>
+            <td>{{clima.current.wind_kph}} kph, {{clima.current.wind_dir}}</td>
+          </tr>
+          <tr>
+            <td>Presión Atmosférica:</td>
+            <td>{{clima.current.pressure_mb}} Mb</td>
+          </tr>
+          <tr>
+            <td>Agua caída:</td>
+            <td>{{clima.current.precip_in}} mm</td>
+          </tr>
+          <tr>
+            <td>Humedad:</td>
+            <td>{{clima.current.humidity}}%</td>
+          </tr>
+          <tr>
+            <td>Visibilidad</td>
+            <td>{{ clima.current.vis_km }} km</td>
+          </tr>
+        </tbody>
+      </table>
+      {% endif %}
+    </div>
+  </body>
+</html>
